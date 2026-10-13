@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#14213d" />
+<title>GALAXY KNOWLEDGE HUB | Exam Date Finder</title>
+<style>
+:root{--navy:#14213d;--blue:#2563eb;--sky:#eaf2ff;--ink:#172033;--muted:#667085;--line:#dbe3ef;--green:#16794b;--red:#a33a35}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(140deg,#eef4ff,#f8fbff 55%,#eef2ff);color:var(--ink);min-height:100vh}
+header{background:linear-gradient(120deg,#101a33,#1d4ed8);color:white;padding:27px 16px 32px;text-align:center}header .logo{font-size:clamp(23px,5vw,35px);font-weight:900;letter-spacing:1.4px}header p{margin:8px 0 0;color:#e3ecff;font-size:15px}
+main{width:min(760px,calc(100% - 24px));margin:-17px auto 35px}.panel{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:20px;box-shadow:0 12px 35px #182d5012;margin-bottom:15px}.section-title{font-size:17px;font-weight:800;margin:0 0 13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;font-weight:700;font-size:13px;color:#344054;margin-bottom:6px}select,input{width:100%;padding:12px;border:1px solid #cfd8e6;border-radius:10px;background:white;color:#182230;font:inherit;outline:none}select:focus,input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2563eb20}.search-row{display:flex;gap:9px;margin-top:14px}.search-row input{flex:1;min-width:0}.search-row button{border:0;border-radius:10px;background:var(--blue);color:white;font-weight:800;padding:0 18px;cursor:pointer}.search-row button:hover{background:#1d4ed8}.hint{font-size:12px;color:var(--muted);margin:10px 0 0;line-height:1.5}.result{display:none;margin-top:15px;border-radius:12px;padding:15px;background:#f4f8ff;border:1px solid #d8e6ff}.result.show{display:block}.result h3{margin:0 0 7px;font-size:17px}.result p{margin:6px 0;line-height:1.5}.pill{display:inline-block;padding:4px 9px;border-radius:999px;background:#e2edff;color:#1646a0;font-size:12px;font-weight:800}.warning{background:#fff7e8;border-color:#f2d7a3;color:#714b00}.error{background:#fff0ef;border-color:#f1c6c2;color:var(--red)}.status{font-size:13px;color:var(--muted);margin:0 0 10px}.footer{text-align:center;color:#667085;font-size:12px;padding:4px 12px 24px}.footer a{color:#2457c5;text-decoration:none}.routine-info{margin-top:13px;font-size:13px;line-height:1.6;color:#4b5565}.hidden{display:none!important}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.panel{padding:16px}.search-row{flex-direction:column}.search-row button{padding:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">GALAXY KNOWLEDGE HUB</div>
+  <p>BRABU Exam Date Finder</p>
+</header>
+<main>
+  <section class="panel">
+    <h2 class="section-title">Find Your Exam Schedule</h2>
+    <p class="status">Select your session and semester, then search by subject or paper code.</p>
+    <div class="grid">
+      <div><label for="session">Session</label><select id="session"><option value="2024-28">2024–28</option><option value="2023-27">2023–27</option><option value="2022-26">2022–26</option><option value="2021-25">2021–25</option><option value="2020-24">2020–24</option><option value="other">Other / Not listed</option></select></div>
+      <div><label for="semester">Semester</label><select id="semester"><option value="1">1st Semester</option><option value="2">2nd Semester</option><option value="3">3rd Semester</option><option value="4" selected>4th Semester</option><option value="5">5th Semester</option><option value="6">6th Semester</option><option value="7">7th Semester</option><option value="8">8th Semester</option></select></div>
+    </div>
+    <div id="routineStatus" class="routine-info"></div>
+    <div id="searchArea">
+      <label for="subject" style="margin-top:16px">Subject name or paper code</label>
+      <div class="search-row"><input id="subject" type="search" placeholder="e.g. Major, Minor, AEC, paper code" autocomplete="off"/><button id="searchBtn" type="button">Search</button></div>
+      <p class="hint">Tip: type part of the subject name. Results appear only when the subject-wise routine data has been added and verified.</p>
+    </div>
+    <div id="result" class="result" aria-live="polite"></div>
+  </section>
+  <section class="panel">
+    <h2 class="section-title">Exam Sitting Details</h2>
+    <p style="margin:0;line-height:1.7"><span class="pill">1st Sitting</span> 09:00 AM – 12:00 PM</p>
+    <p style="margin:10px 0 0;line-height:1.7"><span class="pill">2nd Sitting</span> 01:00 PM – 04:00 PM</p>
+    <p class="hint">Please confirm the final date, paper and sitting from the official BRABU examination routine.</p>
+  </section>
+</main>
+<div class="footer">GALAXY KNOWLEDGE HUB · Exam information helper<br>Official notices: <a href="https://brabu.ac.in/home/latestupdate" target="_blank" rel="noopener">BRABU Latest Updates</a> · <a href="https://brabu.ac.in/home/notification" target="_blank" rel="noopener">Notifications</a></div>
+<script>
+// Add verified subject-wise rows here when the official routine is available.
+// Format: {session:'2024-28', semester:4, subject:'Paper / Subject Name', code:'optional code', date:'2026-10-05', sitting:1, category:'Major (MJC)'}
+const routines = [
+  // The 4th-semester routine for session 2024–28 was identified as running
+  // from 5–15 October 2026, but subject-wise rows are intentionally not guessed.
+];
+const sessionEl=document.getElementById('session');
+const semesterEl=document.getElementById('semester');
+const subjectEl=document.getElementById('subject');
+const resultEl=document.getElementById('result');
+const routineStatus=document.getElementById('routineStatus');
+const searchArea=document.getElementById('searchArea');
+const dateFmt=new Intl.DateTimeFormat('en-IN',{day:'numeric',month:'long',year:'numeric'});
+function getRows(){return routines.filter(r=>r.session===sessionEl.value&&String(r.semester)===semesterEl.value)}
+function renderStatus(){
+ const s=sessionEl.value, sem=semesterEl.value, rows=getRows();
+ resultEl.className='result';resultEl.innerHTML='';
+ if(rows.length){routineStatus.textContent='Verified subject-wise routine data is available for this selection.';searchArea.classList.remove('hidden');return}
+ if(s==='2024-28'&&sem==='4'){
+   routineStatus.innerHTML='<strong>Routine identified:</strong> 4th Semester, Session 2024–28. Overall exam period: <strong>5–15 October 2026</strong>. Subject-wise dates are not loaded into this file yet, so a subject-specific date or sitting will not be guessed.';
+ } else {
+   routineStatus.textContent='Exam Routine अभी उपलब्ध नहीं है';
+ }
+ searchArea.classList.add('hidden');
+}
+function search(){
+ const q=subjectEl.value.trim().toLowerCase(); const rows=getRows();
+ resultEl.className='result show';
+ if(!rows.length){resultEl.classList.add('warning');resultEl.innerHTML='<h3>Exam Routine अभी उपलब्ध नहीं है</h3><p>इस session और semester के subject-wise verified exam details इस वेबसाइट में अभी उपलब्ध नहीं हैं।</p>';return}
+ if(!q){resultEl.classList.add('warning');resultEl.textContent='कृपया subject name या paper code लिखें।';return}
+ const matches=rows.filter(r=>(r.subject||'').toLowerCase().includes(q)||(r.code||'').toLowerCase().includes(q)||(r.category||'').toLowerCase().includes(q));
+ if(!matches.length){resultEl.classList.add('warning');resultEl.innerHTML='<h3>कोई matching paper नहीं मिला</h3><p>Spelling या paper code जाँचें। अगर फिर भी नहीं मिले, तो official routine से पुष्टि करें।';return}
+ resultEl.classList.remove('warning');
+ resultEl.innerHTML='<h3>Exam details</h3>'+matches.map(r=>{const d=new Date(r.date+'T00:00:00');const sitting=Number(r.sitting)===1?'1st Sitting (09:00 AM – 12:00 PM)':'2nd Sitting (01:00 PM – 04:00 PM)';return `<p><strong>${escapeHtml(r.subject)}</strong>${r.code?' · '+escapeHtml(r.code):''}</p><p>Date: <strong>${dateFmt.format(d)}</strong> (${d.toLocaleDateString('en-IN',{weekday:'long'})})</p><p>Sitting: <strong>${sitting}</strong></p>${r.category?'<p>Paper type: '+escapeHtml(r.category)+'</p>':''}<hr style="border:0;border-top:1px solid #dbe3ef;margin:12px 0">`}).join('');
+}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+sessionEl.addEventListener('change',renderStatus);semesterEl.addEventListener('change',renderStatus);document.getElementById('searchBtn').addEventListener('click',search);subjectEl.addEventListener('keydown',e=>{if(e.key==='Enter')search()});renderStatus();
+</script>
+</body>
+</html>
