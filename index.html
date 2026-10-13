@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b72">
+<title>BRABU Exam Date Finder | UG 4th Semester</title>
+<style>
+:root{--navy:#123b72;--blue:#1d5db5;--light:#eef5ff;--ink:#17243a;--muted:#65748b;--line:#dce5f0;--green:#087f5b;--gold:#fff6df}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Devanagari",Arial,sans-serif;color:var(--ink);background:#f4f7fb}
+header{background:linear-gradient(135deg,#102d59,#1e61b8);color:#fff;padding:28px 16px 35px;text-align:center}
+.seal{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.88}
+h1{font-size:clamp(23px,4vw,34px);margin:9px 0 7px;line-height:1.25}
+header p{margin:0;color:#e4eeff;font-size:14px}
+.wrap{max-width:900px;margin:-18px auto 40px;padding:0 14px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 10px 30px #18385b12}
+label{display:block;font-weight:700;margin:0 0 9px}
+.searchrow{display:flex;gap:9px}
+input,select,button{font:inherit;border-radius:11px}
+input,select{width:100%;min-width:0;border:1px solid #cbd7e6;padding:13px 14px;background:#fff;color:var(--ink);outline:none}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1d5db51a}
+button{border:0;background:var(--blue);color:#fff;font-weight:700;padding:0 19px;cursor:pointer}
+button:hover{background:#164a91}
+.filters{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.hint{font-size:13px;color:var(--muted);margin:13px 0 0}
+.results{margin-top:18px;display:grid;gap:12px}
+.result{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}
+.resulttop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.subject{font-size:19px;font-weight:800}
+.group{font-size:12px;color:#214f8d;background:var(--light);padding:5px 9px;border-radius:20px;white-space:nowrap;font-weight:700}
+.details{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px}
+.detail{background:#f7f9fc;border-radius:10px;padding:10px}
+.detail small{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}
+.detail strong{font-size:14px}
+.sitting{color:var(--green)}
+.notice{background:var(--gold);border:1px solid #f1dfac;border-radius:12px;padding:13px 15px;font-size:13px;line-height:1.55;margin-top:16px}
+.empty{display:none;text-align:center;padding:24px 12px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12px;line-height:1.6;padding:0 14px 28px}
+.tag{display:inline-block;margin:4px 4px 0 0;background:#f0f3f8;padding:4px 8px;border-radius:8px;font-size:12px}
+@media(max-width:560px){.panel{padding:16px}.searchrow{flex-direction:column}.searchrow button{padding:12px}.filters{grid-template-columns:1fr}.details{grid-template-columns:1fr}.resulttop{flex-direction:column;gap:7px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="seal">Student Help Desk</div>
+  <h1>BRABU Exam Date Finder</h1>
+  <p>UG CBCS • 4th Semester • Session 2024–28</p>
+</header>
+<main class="wrap">
+  <section class="panel">
+    <label for="query">अपने Subject का नाम लिखें</label>
+    <div class="searchrow">
+      <input id="query" type="search" placeholder="जैसे Hindi, English, Mathematics..." autocomplete="off">
+      <button id="searchBtn" type="button">Exam Date खोजें</button>
+    </div>
+    <div class="filters">
+      <div>
+        <label for="course">Course चुनें</label>
+        <select id="course">
+          <option value="all">सभी (Major + Minor)</option>
+          <option value="MJC">Major (MJC)</option>
+          <option value="MIC">Minor (MIC)</option>
+          <option value="AEC">AEC</option>
+        </select>
+      </div>
+      <div>
+        <label for="group">Group चुनें (यदि पता हो)</label>
+        <select id="group">
+          <option value="all">सभी Groups</option><option>A</option><option>B</option><option>C</option><option>D</option>
+        </select>
+      </div>
+    </div>
+    <p class="hint">Subject का पूरा या कुछ नाम लिखें। उदाहरण: “Math”, “Political Science”, “Home Science”.</p>
+  </section>
+  <section id="results" class="results" aria-live="polite"></section>
+  <div id="empty" class="empty">इस नाम से कोई subject नहीं मिला। Spelling जाँचें या subject का छोटा नाम लिखें।</div>
+  <div class="notice"><strong>ज़रूरी सूचना:</strong> यह खोज-सुविधा आपके भेजे गए परीक्षा कार्यक्रम के आधार पर बनाई गई है। अपना admit card/कॉलेज का आधिकारिक निर्देश भी ज़रूर जाँचें। कुछ subjects Major और Minor दोनों में हैं, इसलिए सही Course और Group चुनें।</div>
+</main>
+<footer>
+  BRABU, Muzaffarpur • Exam schedule shown as printed in the provided notice.<br>
+  परीक्षा की तारीख/समय में बदलाव के लिए विश्वविद्यालय की आधिकारिक सूचना मान्य होगी।
+</footer>
+<script>
+const schedule = {
+  MJC: {
+    5: {A:["05 October 2026","Monday","09:00 AM – 12:00 PM"],B:["05 October 2026","Monday","01:00 PM – 04:00 PM"],C:["06 October 2026","Tuesday","09:00 AM – 12:00 PM"],D:["06 October 2026","Tuesday","01:00 PM – 04:00 PM"]},
+    6: {A:["07 October 2026","Wednesday","09:00 AM – 12:00 PM"],B:["07 October 2026","Wednesday","01:00 PM – 04:00 PM"],C:["08 October 2026","Thursday","09:00 AM – 12:00 PM"],D:["08 October 2026","Thursday","01:00 PM – 04:00 PM"]},
+    7: {A:["09 October 2026","Friday","09:00 AM – 12:00 PM"],B:["09 October 2026","Friday","01:00 PM – 04:00 PM"],C:["10 October 2026","Saturday","09:00 AM – 12:00 PM"],D:["10 October 2026","Saturday","01:00 PM – 04:00 PM"]}
+  },
+  MIC: {
+    4: {A:["12 October 2026","Monday","09:00 AM – 12:00 PM"],B:["12 October 2026","Monday","01:00 PM – 04:00 PM"],C:["13 October 2026","Tuesday","09:00 AM – 12:00 PM"],D:["13 October 2026","Tuesday","01:00 PM – 04:00 PM"]}
+  },
+  AEC: {1:{A:["14 October 2026","Wednesday","09:00 AM – 12:00 PM"],B:["14 October 2026","Wednesday","01:00 PM – 04:00 PM"],C:["15 October 2026","Thursday","09:00 AM – 12:00 PM"],D:["15 October 2026","Thursday","01:00 PM – 04:00 PM"]}}
+};
+const subjects = [];
+function add(course, group, names, paper){
+  names.forEach(name=>subjects.push({course,group,name,paper}));
+}
+add("MJC","A",["English","Philosophy","Political Science","Sanskrit","Sociology","Urdu","Zoology"],"MJC-V");
+add("MJC","B",["Bangla","Bengali","Bhojpuri","Electronics","History","Home Science","Human Resource Management","HRM","L.S.W.","LSW","Maithili","Marketing","Persian"],"MJC-V");
+add("MJC","C",["Accounting & Finance","Accounting and Finance","AIH & C","AIH and C","Botany","Chemistry","Hindi","Mathematics","Math"],"MJC-V");
+add("MJC","D",["Economics","Geography","Music","Physics","Psychology"],"MJC-V");
+add("MJC","A",["English","Philosophy","Political Science","Sanskrit","Sociology","Urdu","Zoology"],"MJC-VI");
+add("MJC","B",["Bangla","Bengali","Bhojpuri","Electronics","History","Home Science","Human Resource Management","HRM","L.S.W.","LSW","Maithili","Marketing","Persian"],"MJC-VI");
+add("MJC","C",["Accounting & Finance","Accounting and Finance","AIH & C","AIH and C","Botany","Chemistry","Hindi","Mathematics","Math"],"MJC-VI");
+add("MJC","D",["Economics","Geography","Music","Physics","Psychology"],"MJC-VI");
+add("MJC","A",["English","Philosophy","Political Science","Sanskrit","Sociology","Urdu","Zoology"],"MJC-VII");
+add("MJC","B",["Bangla","Bengali","Bhojpuri","Electronics","History","Home Science","Human Resource Management","HRM","L.S.W.","LSW","Maithili","Marketing","Persian"],"MJC-VII");
+add("MJC","C",["Accounting & Finance","Accounting and Finance","AIH & C","AIH and C","Botany","Chemistry","Hindi","Mathematics","Math"],"MJC-VII");
+add("MJC","D",["Economics","Geography","Music","Physics","Psychology"],"MJC-VII");
+add("MIC","A",["Accounting & Finance","Accounting and Finance","AIH & C","AIH and C","Bhojpuri","Botany","Maithili","Mathematics","Math","Music","Political Science","Sanskrit"],"MIC-IV");
+add("MIC","B",["Electronics","History","L.S.W.","LSW","Persian"],"MIC-IV");
+add("MIC","C",["Chemistry","Home Science","Human Resource Management","HRM","Philosophy","Psychology","Sociology","Zoology"],"MIC-IV");
+add("MIC","D",["Economics","English","Geography","Hindi","Marketing","Physics","Urdu"],"MIC-IV");
+add("AEC","A",["AEC"],"AEC");
+add("AEC","B",["AEC"],"AEC");
+add("AEC","C",["AEC"],"AEC");
+add("AEC","D",["AEC"],"AEC");
+const $=id=>document.getElementById(id);
+function norm(s){return s.toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]/g,"")}
+function allResults(){
+  const q=$("query").value.trim(), course=$("course").value, group=$("group").value;
+  if(!q){$("results").innerHTML="";$("empty").style.display="block";$("empty").textContent="पहले ऊपर subject का नाम लिखें।";return}
+  const nq=norm(q);
+  let found=subjects.filter(s=>(course==="all"||s.course===course)&&(group==="all"||s.group===group)&&
+    (norm(s.name).includes(nq)||nq.includes(norm(s.name))&&nq.length>2));
+  // collapse identical aliases for the same course/group/paper
+  const seen=new Set(); found=found.filter(s=>{const k=[s.course,s.group,s.paper,norm(s.name)].join("|");if(seen.has(k))return false;seen.add(k);return true});
+  const out=[];
+  found.forEach(s=>{
+    const paperNum=s.paper==="MJC-V"?5:s.paper==="MJC-VI"?6:s.paper==="MJC-VII"?7:s.paper==="MIC-IV"?4:1;
+    const slot=schedule[s.course]?.[paperNum]?.[s.group];
+    if(slot)out.push({...s,slot});
+  });
+  // Prefer exact subject matches, then name length; keep one result per exam paper/group.
+  out.sort((a,b)=>(norm(a.name)!==nq)-(norm(b.name)!==nq)||a.name.length-b.name.length);
+  $("results").innerHTML=out.map(s=>`<article class="result">
+    <div class="resulttop"><div class="subject">${s.name}</div><span class="group">${s.course==="MJC"?"Major":s.course==="MIC"?"Minor":"AEC"} • Group ${s.group}</span></div>
+    <div class="details">
+      <div class="detail"><small>परीक्षा की तारीख</small><strong>${s.slot[0]}</strong><div>${s.slot[1]}</div></div>
+      <div class="detail"><small>सिटिंग / समय</small><strong class="sitting">${s.slot[2].startsWith("09")?"1st Sitting":"2nd Sitting"}</strong><div>${s.slot[2]}</div></div>
+      <div class="detail"><small>पेपर / कोर्स</small><strong>${s.paper}</strong><div>${s.course==="MJC"?"Major Course":s.course==="MIC"?"Minor Course":"AEC"}</div></div>
+    </div></article>`).join("");
+  $("empty").style.display=out.length?"none":"block";
+  if(!out.length)$("empty").textContent="इस नाम से कोई subject नहीं मिला। Spelling जाँचें या subject का छोटा नाम लिखें।";
+}
+$("searchBtn").addEventListener("click",allResults);
+$("query").addEventListener("keydown",e=>{if(e.key==="Enter")allResults()});
+$("course").addEventListener("change",allResults);$("group").addEventListener("change",allResults);
+</script>
+</body>
+</html>
